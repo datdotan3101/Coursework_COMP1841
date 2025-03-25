@@ -2,7 +2,7 @@
 session_start();
 include '../../includes/config.php';
 
-if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
+if (isset($_SESSION['user_id']) && isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
     header("Location: ../index.php");
     exit();
 }
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($user) {
                 if ($user['role'] !== 'admin') {
-                    $errors['username'] = "Bạn không có quyền truy cập trang này!";
+                    $errors['username'] = "You do not allowed access this page!";
                 } elseif (password_verify($password, $user['password'])) {
                     session_regenerate_id(true);
                     $_SESSION['user_id'] = $user['id'];
